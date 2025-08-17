@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "WordPress Plugin Filter",
+  "version": "2.0.2",
+  "description": "Filter WordPress.org plugin directory by rating, active installations, and last updated date. Uses WordPress.org API for enhanced filtering capabilities.",
+  "author": "WordPress Plugin Filter Extension",
+  
+  "permissions": [
+    "activeTab"
+  ],
+  
+  "host_permissions": [
+    "*://wordpress.org/*",
+    "*://api.wordpress.org/*"
+  ],
+  
+  "content_scripts": [
+    {
+      "matches": [
+        "*://wordpress.org/plugins/*",
+        "*://wordpress.org/plugins/search/*"
+      ],
+      "js": ["content.js"],
+      "css": ["inject-ui.css"],
+      "run_at": "document_end"
+    }
+  ],
+  
+  "icons": {
+    "16": "icons/icon48.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  
+  "action": {
+    "default_title": "WordPress Plugin Filter - Active on WordPress.org plugin pages"
+  }
+}
