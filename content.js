@@ -40,7 +40,7 @@ function createFilterUI() {
     ">
       <h4 style="margin: 0 0 15px 0; color: #333;">Enhanced Plugin Filter</h4>
       
-      <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 15px; flex-wrap: wrap;">
+      <div style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
         <label style="display: flex; align-items: center; gap: 8px;">
           <span>⭐ Min Rating:</span>
           <input type="number" id="filter-rating" min="0" max="5" step="0.1" value="0" 
@@ -68,9 +68,7 @@ function createFilterUI() {
             <option value="365">1 year</option>
           </select>
         </label>
-      </div>
-      
-      <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+        
         <button id="apply-filter" style="
           background: #0073aa; color: white; border: none; 
           padding: 8px 16px; border-radius: 3px; cursor: pointer;

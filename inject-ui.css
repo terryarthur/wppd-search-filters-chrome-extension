@@ -29,10 +29,15 @@
   align-items: stretch !important;
 }
 
-/* Clean list item styling for filtered results */
-.wp-filter-active .wp-block-post-template li {
+/* Clean list item styling for filtered results - Override WordPress.org flow layout margins */
+body.wp-filter-active .wp-block-post-template li,
+body.wp-filter-active .is-layout-flow > .wp-block-post {
   list-style: none !important;
   margin: 0 !important;
+  margin-block-start: 0 !important;
+  margin-block-end: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
   padding: 0 !important;
 }
 
