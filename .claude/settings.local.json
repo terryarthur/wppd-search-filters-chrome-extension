@@ -6,7 +6,8 @@
       "WebFetch(domain:developer.chrome.com)",
       "Bash(cp:*)",
       "Bash(rm:*)",
-      "WebFetch(domain:wordpress.org)"
+      "WebFetch(domain:wordpress.org)",
+      "Bash(node:*)"
     ],
     "deny": []
   }
