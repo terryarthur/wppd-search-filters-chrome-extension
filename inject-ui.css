@@ -9,10 +9,10 @@
   z-index: 1000 !important;
 }
 
-/* Hide pagination when showing filtered results */
-.wp-filter-active .wp-block-query-pagination,
-.wp-filter-active .pagination,
-.wp-filter-active .wp-pagenavi {
+/* Hide pagination only when showing filtered results */
+.wp-filter-results-active .wp-block-query-pagination,
+.wp-filter-results-active .pagination,
+.wp-filter-results-active .wp-pagenavi {
   display: none !important;
 }
 
@@ -140,6 +140,63 @@ body.wp-filter-active .plugin-card footer span svg {
   height: 18px !important;
   fill: #646970 !important;
   flex-shrink: 0 !important;
+}
+
+/* Health Score Power Meter Styling */
+body.wp-filter-active .plugin-card footer .health-score .health-meter {
+  font-size: 16px !important;
+  display: inline-block !important;
+  margin-right: 8px !important;
+  vertical-align: middle !important;
+  line-height: 1 !important;
+}
+
+/* Power meter colors based on health score */
+body.wp-filter-active .plugin-card footer .health-score.health-green .health-meter {
+  filter: hue-rotate(120deg) brightness(1.2) !important; /* Green tint for high health */
+}
+
+body.wp-filter-active .plugin-card footer .health-score.health-yellow .health-meter {
+  filter: hue-rotate(45deg) brightness(1.1) !important; /* Yellow/orange tint for medium health */
+}
+
+body.wp-filter-active .plugin-card footer .health-score.health-red .health-meter {
+  filter: hue-rotate(-30deg) brightness(1.1) !important; /* Red tint for low health */
+}
+
+/* Health Score Badge for Native Cards - Only show when explicitly added */
+.plugin-card .health-score-badge,
+.wp-block-post .health-score-badge,
+.wp-block-post-template li .health-score-badge {
+  margin-top: 6px !important;
+  position: relative !important;
+  z-index: 1 !important;
+  max-width: 200px !important;
+  overflow: hidden !important;
+}
+
+/* Prevent badges from breaking card layout */
+.health-score-badge {
+  display: block !important;
+  width: fit-content !important;
+}
+
+/* Hide any stray badges that might break layout */
+.health-score-badge:not(.plugin-card .health-score-badge):not(.wp-block-post .health-score-badge):not(.wp-block-post-template li .health-score-badge) {
+  display: none !important;
+}
+
+/* Traffic light colors for usability score */
+body.wp-filter-active .plugin-card footer .usability-score.usability-green svg path {
+  fill: #00a32a !important; /* WordPress green */
+}
+
+body.wp-filter-active .plugin-card footer .usability-score.usability-yellow svg path {
+  fill: #dba617 !important; /* WordPress yellow/orange */
+}
+
+body.wp-filter-active .plugin-card footer .usability-score.usability-red svg path {
+  fill: #d63638 !important; /* WordPress red */
 }
 
 /* Star rating styles for API-generated cards */
