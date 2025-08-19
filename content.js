@@ -367,10 +367,16 @@ function clearFilters() {
   // Remove filtered styling class
   document.body.classList.remove('wp-filter-active');
   
-  // Reset status
-  const cards = document.querySelectorAll('.plugin-card, .wp-block-post');
-  document.getElementById('filter-status').textContent = 
-    `Showing all ${cards.length} plugins`;
+  // Reset status - count actual visible plugins on the page
+  setTimeout(() => {
+    const cards = document.querySelectorAll('.plugin-card, .wp-block-post, li.wp-block-post');
+    const visibleCards = Array.from(cards).filter(card => 
+      card.style.display !== 'none' && 
+      card.offsetParent !== null
+    );
+    document.getElementById('filter-status').textContent = 
+      `Ready to filter ${visibleCards.length} plugins`;
+  }, 100);
 }
 
 // Initialize extension
@@ -396,10 +402,16 @@ async function init() {
     document.getElementById('apply-filter').onclick = applyFilters;
     document.getElementById('clear-filter').onclick = clearFilters;
     
-    // Set initial status - count actual WordPress.org plugins
-    const cards = document.querySelectorAll('.plugin-card, .wp-block-post');
-    document.getElementById('filter-status').textContent = 
-      `Ready to filter plugins`;
+    // Set initial status - count actual visible WordPress.org plugins
+    setTimeout(() => {
+      const cards = document.querySelectorAll('.plugin-card, .wp-block-post, li.wp-block-post');
+      const visibleCards = Array.from(cards).filter(card => 
+        card.style.display !== 'none' && 
+        card.offsetParent !== null
+      );
+      document.getElementById('filter-status').textContent = 
+        `Ready to filter ${visibleCards.length} plugins`;
+    }, 100);
     
     isInitialized = true;
     
