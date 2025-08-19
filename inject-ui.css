@@ -9,10 +9,10 @@
   z-index: 1000 !important;
 }
 
-/* Hide pagination when showing filtered results */
-.wp-filter-active .wp-block-query-pagination,
-.wp-filter-active .pagination,
-.wp-filter-active .wp-pagenavi {
+/* Hide pagination only when showing filtered results */
+.wp-filter-results-active .wp-block-query-pagination,
+.wp-filter-results-active .pagination,
+.wp-filter-results-active .wp-pagenavi {
   display: none !important;
 }
 
@@ -140,6 +140,19 @@ body.wp-filter-active .plugin-card footer span svg {
   height: 18px !important;
   fill: #646970 !important;
   flex-shrink: 0 !important;
+}
+
+/* Traffic light colors for usability score */
+body.wp-filter-active .plugin-card footer .usability-score.usability-green svg path {
+  fill: #00a32a !important; /* WordPress green */
+}
+
+body.wp-filter-active .plugin-card footer .usability-score.usability-yellow svg path {
+  fill: #dba617 !important; /* WordPress yellow/orange */
+}
+
+body.wp-filter-active .plugin-card footer .usability-score.usability-red svg path {
+  fill: #d63638 !important; /* WordPress red */
 }
 
 /* Star rating styles for API-generated cards */
