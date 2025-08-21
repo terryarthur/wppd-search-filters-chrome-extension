@@ -44,3 +44,28 @@ Common development tasks:
 - Modifying filter criteria in content.js
 - Adjusting UI layout in inject-ui.css
 - Updating manifest.json for permissions or matching URLs
+
+## Build System
+
+The project includes automatic build synchronization:
+
+- `build-for-submission/` - Clean build directory with only submission files
+- `sync-build.sh` - Manual sync script to update build directory
+- `simple-watch.sh` - Auto-sync watcher using polling (no dependencies)
+- `watch-and-sync.sh` - Advanced auto-sync using inotifywait (requires inotify-tools)
+
+**Usage:**
+- Manual sync: `./sync-build.sh`
+- Auto-sync (simple): `./simple-watch.sh` (runs in background)
+- Auto-sync (advanced): `./watch-and-sync.sh` (requires inotify-tools)
+
+The build directory automatically stays in sync with root file changes when using the watch scripts.
+
+## Commit Guidelines
+
+**IMPORTANT**: When making git commits, DO NOT include:
+- "Co-Authored-By: Claude" lines
+- "Generated with Claude Code" messages  
+- Any AI/OpenAI attribution or links
+
+Keep commit messages clean and focused on the actual changes made.
