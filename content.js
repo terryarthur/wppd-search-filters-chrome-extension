@@ -283,11 +283,11 @@ function createPluginCard(plugin) {
     <li class="wp-block-post post-${plugin.slug} plugin type-plugin status-publish hentry">
       <div class="plugin-card wp-block-wporg-link-wrapper is-style-no-underline">
         <div class="entry">
-          <header class="entry-header">
-            <div class="entry-thumbnail">
-              <img class="plugin-icon" srcset="${plugin.icons?.['1x'] || plugin.icons?.default || ''}, ${plugin.icons?.['2x'] || plugin.icons?.default || ''} 2x" src="${plugin.icons?.['2x'] || plugin.icons?.default || ''}" alt="">
+          <header class="entry-header" style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+            <div class="entry-thumbnail" style="flex-shrink: 0;">
+              <img class="plugin-icon" srcset="${plugin.icons?.['1x'] || plugin.icons?.default || ''}, ${plugin.icons?.['2x'] || plugin.icons?.default || ''} 2x" src="${plugin.icons?.['2x'] || plugin.icons?.default || ''}" alt="" style="width: 64px; height: 64px; border-radius: 4px;">
             </div>
-            <h3 class="entry-title"><a href="https://wordpress.org/plugins/${plugin.slug}/">${plugin.name}</a></h3>
+            <h3 class="entry-title" style="margin: 0; flex: 1;"><a href="https://wordpress.org/plugins/${plugin.slug}/">${plugin.name}</a></h3>
           </header><!-- .entry-header -->
 
           <div class="plugin-rating">
@@ -313,6 +313,10 @@ function createPluginCard(plugin) {
           <span class="tested-with">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M20 10c0-5.51-4.49-10-10-10C4.48 0 0 4.49 0 10c0 5.52 4.48 10 10 10 5.51 0 10-4.48 10-10zM7.78 15.37L4.37 6.22c.55-.02 1.17-.08 1.17-.08.5-.06.44-1.13-.06-1.11 0 0-1.45.11-2.37.11-.18 0-.37 0-.58-.01C4.12 2.69 6.87 1.11 10 1.11c2.33 0 4.45.87 6.05 2.34-.68-.11-1.65.39-1.65 1.58 0 .74.45 1.36.9 2.1.35.61.55 1.36.55 2.46 0 1.49-1.4 5-1.4 5l-3.03-8.37c.54-.02.82-.17.82-.17.5-.05.44-1.25-.06-1.22 0 0-1.44.12-2.38.12-.87 0-2.33-.12-2.33-.12-.5-.03-.56 1.2-.06 1.22l.92.08 1.26 3.41zM17.41 10c.24-.64.74-1.87.43-4.25.7 1.29 1.05 2.71 1.05 4.25 0 3.29-1.73 6.24-4.4 7.78.97-2.59 1.94-5.2 2.92-7.78zM6.1 18.09C3.12 16.65 1.11 13.53 1.11 10c0-1.3.23-2.48.72-3.59C3.25 10.3 4.67 14.2 6.1 18.09zm4.03-6.63l2.58 6.98c-.86.29-1.76.45-2.71.45-.79 0-1.57-.11-2.29-.33.81-2.38 1.62-4.74 2.42-7.10z"></path></svg>
             <span>Tested with ${plugin.tested || 'unknown'}</span>
+          </span>
+          <span class="last-updated">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+            <span>Updated ${timeAgo}</span>
           </span>
           <span class="usability-score usability-${usabilityColor}">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path></svg>
@@ -673,16 +677,58 @@ function createStarRating(rating) {
 function getTimeAgo(date) {
   const now = new Date();
   const diffTime = Math.abs(now - date);
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
   
-  if (diffDays <= 30) {
-    return `${diffDays} ${diffDays === 1 ? 'day' : 'days'} ago`;
-  } else if (diffDays <= 365) {
+  // Today (within last 24 hours)
+  if (diffHours < 24) {
+    if (diffHours < 1) {
+      return 'Just now';
+    } else if (diffHours === 1) {
+      return '1 hour ago';
+    } else {
+      return `${diffHours} hours ago`;
+    }
+  }
+  
+  // Yesterday
+  if (diffDays === 1) {
+    return 'Yesterday';
+  }
+  
+  // This week (2-6 days ago)
+  if (diffDays >= 2 && diffDays <= 6) {
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return `Last ${dayNames[date.getDay()]}`;
+  }
+  
+  // Last week (7-13 days ago)
+  if (diffDays >= 7 && diffDays <= 13) {
+    return 'Last week';
+  }
+  
+  // This month (2-4 weeks ago)
+  if (diffDays >= 14 && diffDays <= 30) {
+    const weeks = Math.floor(diffDays / 7);
+    return `${weeks} ${weeks === 1 ? 'week' : 'weeks'} ago`;
+  }
+  
+  // Last month to 11 months
+  if (diffDays >= 31 && diffDays <= 365) {
     const months = Math.floor(diffDays / 30);
-    return `${months} ${months === 1 ? 'month' : 'months'} ago`;
+    if (months === 1) {
+      return 'Last month';
+    } else {
+      return `${months} months ago`;
+    }
+  }
+  
+  // Years
+  const years = Math.floor(diffDays / 365);
+  if (years === 1) {
+    return 'Last year';
   } else {
-    const years = Math.floor(diffDays / 365);
-    return `${years} ${years === 1 ? 'year' : 'years'} ago`;
+    return `${years} years ago`;
   }
 }
 
@@ -880,11 +926,6 @@ async function init() {
     // Add event listeners
     document.getElementById('apply-filter').onclick = applyFilters;
     document.getElementById('clear-filter').onclick = clearFilters;
-    
-    // Add auto-filtering with debouncing for better UX
-    document.getElementById('filter-rating').addEventListener('input', debouncedApplyFilters);
-    document.getElementById('filter-installs').addEventListener('change', debouncedApplyFilters);
-    document.getElementById('filter-updated').addEventListener('change', debouncedApplyFilters);
     
     // Add event delegation for pagination buttons (click and keyboard)
     document.addEventListener('click', function(event) {
