@@ -26,6 +26,7 @@ Thumbs.db
 *.pem
 
 # Claude Code related files
+.claude/
 docs/CLAUDE.md
 *.code-workspace
 
