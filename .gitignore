@@ -24,3 +24,12 @@ Thumbs.db
 *.zip
 *.crx
 *.pem
+
+# Claude Code related files
+docs/CLAUDE.md
+*.code-workspace
+
+# Sync and build scripts
+sync-build.sh
+simple-watch.sh
+watch-and-sync.sh
