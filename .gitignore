@@ -38,3 +38,6 @@ watch-and-sync.sh
 key.pem
 index.html
 style.css
+
+# Documentation files
+docs/
